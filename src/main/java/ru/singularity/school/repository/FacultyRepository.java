@@ -1,19 +1,12 @@
 package ru.singularity.school.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.singularity.school.model.Faculty;
 
-import java.util.HashMap;
+import java.util.List;
 
-public sealed interface FacultyRepository permits FacultyRepositoryImpl {
-    // Get
-    HashMap<Long, Faculty> getFaculties();
-
-    // Post
-    void addFaculty(Faculty faculty);
-
-    // Put
-    void updateFaculty(Faculty faculty);
-
-    // Remove
-    void deleteFaculty(Long id);
+public interface FacultyRepository extends JpaRepository<Faculty, Long> {
+    List<Faculty> findByColor(String color);
+    List<Faculty> findByNameIgnoreCase(String name);
+    List<Faculty> findByColorIgnoreCase(String color);
 }

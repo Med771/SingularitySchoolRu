@@ -1,19 +1,11 @@
 package ru.singularity.school.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.singularity.school.model.Student;
 
-import java.util.HashMap;
+import java.util.List;
 
-public sealed interface StudentRepository permits StudentRepositoryImpl {
-    // Get
-    HashMap<Long, Student> getStudents();
-
-    // Post
-    void addStudent(Student student);
-
-    // Put
-    void updateStudent(Student student);
-
-    // Delete
-    void deleteStudent(Long id);
+public interface StudentRepository extends JpaRepository<Student, Long> {
+    List<Student> findByAge(int age);
+    List<Student> findByAgeBetween(int min, int max);
 }

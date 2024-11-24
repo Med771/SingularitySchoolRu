@@ -1,17 +1,20 @@
 package ru.singularity.school.model;
 
-public final class Faculty {
-    // Init
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+public class Faculty {
+    @Id
+    @GeneratedValue
     private Long id;
+
     private String name;
     private String color;
 
-    // Constructor
-    public Faculty(Long id, String name, String color) {
-        this.id = id;
-        this.name = name;
-        this.color = color;
-    }
+    @OneToMany(mappedBy = "faculty")
+    private List<Student> students;
 
     // Get
     public Long getId() {
@@ -26,12 +29,11 @@ public final class Faculty {
         return color;
     }
 
-
-    // Set
-    public void setId(Long id) {
-        this.id = id;
+    public List<Student> getStudents() {
+        return students;
     }
 
+    // Set
     public void setName(String name) {
         this.name = name;
     }
