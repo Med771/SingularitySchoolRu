@@ -2,6 +2,7 @@ package ru.singularity.school.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.singularity.school.model.Faculty;
 import ru.singularity.school.model.Student;
 import ru.singularity.school.service.StudentServiceImpl;
 
@@ -20,6 +21,17 @@ public class StudentController {
     @GetMapping(path = "/get/{age}")
     public ResponseEntity<List<Student>> getFaculty(@PathVariable int age) {
         return ResponseEntity.ok(studentService.getStudents(age));
+    }
+
+    @GetMapping(path = "/getFaculty/{id}")
+    public ResponseEntity<Faculty> getStudent(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.getFaculty(id));
+    }
+
+    @GetMapping(path = "/findByAgeBetween/{minAge}/{maxAge}")
+    public ResponseEntity<List<Student>> getFacultyByAgeBetween(@PathVariable int minAge,
+                                                                @PathVariable int maxAge) {
+        return ResponseEntity.ok(studentService.findStudentsByAgeBetween(minAge, maxAge));
     }
 
     // Post

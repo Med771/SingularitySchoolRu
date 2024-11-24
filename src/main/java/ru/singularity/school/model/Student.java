@@ -1,8 +1,6 @@
 package ru.singularity.school.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Student {
@@ -12,6 +10,10 @@ public class Student {
 
     private String name;
     private int age;
+
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
 
     // Get
     public Long getId() {
@@ -24,6 +26,10 @@ public class Student {
 
     public int getAge() {
         return age;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
     }
 
     // Set

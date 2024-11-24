@@ -2,6 +2,7 @@ package ru.singularity.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.singularity.school.model.Faculty;
+import ru.singularity.school.model.Student;
 import ru.singularity.school.repository.FacultyRepository;
 
 import java.util.List;
@@ -18,6 +19,18 @@ public final class FacultyServiceImpl implements FacultyService {
     // Get
     public List<Faculty> getFaculties(String color) {
         return facultyRepository.findByColor(color);
+    }
+
+    public List<Student> getStudents(Long id) {
+        return facultyRepository.findById(id).get().getStudents();
+    }
+
+    public List<Faculty> findByFacultyName(String facultyName) {
+        return facultyRepository.findByNameIgnoreCase(facultyName);
+    }
+
+    public List<Faculty> findByFacultyColor(String facultyColor) {
+        return facultyRepository.findByColorIgnoreCase(facultyColor);
     }
 
     // Post

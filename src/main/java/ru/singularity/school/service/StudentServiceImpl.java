@@ -1,6 +1,7 @@
 package ru.singularity.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.singularity.school.model.Faculty;
 import ru.singularity.school.model.Student;
 import ru.singularity.school.repository.StudentRepository;
 
@@ -17,6 +18,14 @@ public final class StudentServiceImpl implements StudentService {
     // Get
     public List<Student> getStudents(int age) {
         return studentRepository.findByAge(age);
+    }
+
+    public Faculty getFaculty(Long id) {
+        return studentRepository.findById(id).get().getFaculty();
+    }
+
+    public List<Student> findStudentsByAgeBetween(int minAge, int maxAge) {
+        return studentRepository.findByAgeBetween(minAge, maxAge);
     }
 
     // Post
