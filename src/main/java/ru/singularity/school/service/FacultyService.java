@@ -13,11 +13,11 @@ public sealed interface FacultyService permits FacultyServiceImpl{
     List<Faculty> findByFacultyColor(String facultyColor);
 
     // Post
-    void addFaculty(Faculty faculty);
+    Faculty addFaculty(Faculty faculty);
 
     // Put
-    void updateFaculty(Faculty faculty);
+    Faculty updateFaculty(Faculty faculty);
 
     // Delete
-    void deleteFaculty(Long id);
+    Faculty deleteFaculty(Long id);
 }
