@@ -5,7 +5,9 @@ import ru.singularity.school.model.Faculty;
 import ru.singularity.school.model.Student;
 import ru.singularity.school.repository.FacultyRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public final class FacultyServiceImpl implements FacultyService {
@@ -22,7 +24,13 @@ public final class FacultyServiceImpl implements FacultyService {
     }
 
     public List<Student> getStudents(Long id) {
-        return facultyRepository.findById(id).get().getStudents();
+        Optional<Faculty> faculty = facultyRepository.findById(id);
+
+        if (faculty.isPresent()) {
+            return faculty.get().getStudents();
+        }
+
+        return new ArrayList<>();
     }
 
     public List<Faculty> findByFacultyName(String facultyName) {
@@ -34,17 +42,35 @@ public final class FacultyServiceImpl implements FacultyService {
     }
 
     // Post
-    public void addFaculty(Faculty faculty) {
-        facultyRepository.save(faculty);
+    public Faculty addFaculty(Faculty faculty) {
+        return facultyRepository.save(faculty);
     }
 
     // Put
-    public void updateFaculty(Faculty faculty) {
-        facultyRepository.save(faculty);
+    public Faculty updateFaculty(Faculty faculty) {
+        return facultyRepository.save(faculty);
     }
 
     // Delete
-    public void deleteFaculty(Long id) {
-        facultyRepository.deleteById(id);
+    public Faculty deleteFaculty(Long id) {
+        Optional<Faculty> faculty = facultyRepository.findById(id);
+
+        if (faculty.isPresent()) {
+            Long facultyId = faculty.get().getId();
+            String facultyName = faculty.get().getName();
+            String facultyColor = faculty.get().getColor();
+
+            facultyRepository.deleteById(facultyId);
+
+            Faculty facultyResponse = new Faculty();
+
+            facultyResponse.setId(facultyId);
+            facultyResponse.setName(facultyName);
+            facultyResponse.setColor(facultyColor);
+
+            return facultyResponse;
+        }
+
+        return new Faculty();
     }
 }

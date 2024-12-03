@@ -20,22 +20,22 @@ public class FacultyController {
     }
 
     // Get
-    @GetMapping(path = "/get/{color}")
-    public ResponseEntity<List<Faculty>> getFaculty(@PathVariable String color) {
+    @GetMapping(path = "/getByColor/{color}")
+    public ResponseEntity<List<Faculty>> getFacultiesByColor(@PathVariable String color) {
         return ResponseEntity.ok(facultyService.getFaculties(color));
     }
 
-    @GetMapping(path="getStudents/{id}")
+    @GetMapping(path="getStudentsById/{id}")
     public ResponseEntity<List<Student>> getStudents(@PathVariable Long id) {
         return ResponseEntity.ok(facultyService.getStudents(id));
     }
 
-    @GetMapping(path = "/findByFacultyName/{name}")
+    @GetMapping(path = "/findByFacultiesName/{name}")
     public ResponseEntity<List<Faculty>> getFacultyByFacultyName(@PathVariable String name) {
         return ResponseEntity.ok(facultyService.findByFacultyName(name));
     }
 
-    @GetMapping(path = "findByFacultyColor/{color}")
+    @GetMapping(path = "findByFacultiesColor/{color}")
     public ResponseEntity<List<Faculty>> getFacultyByFacultyColor(@PathVariable String color) {
         return ResponseEntity.ok(facultyService.findByFacultyColor(color));
     }
@@ -43,23 +43,17 @@ public class FacultyController {
     // Post
     @PostMapping(path = "/post")
     public ResponseEntity<Faculty> postFaculty(@RequestBody Faculty faculty) {
-        facultyService.addFaculty(faculty);
-
-        return ResponseEntity.ok(faculty);
+        return ResponseEntity.ok(facultyService.addFaculty(faculty));
     }
 
     // Put
     @PutMapping(path = "/put")
     public ResponseEntity<Faculty> putFaculty(@RequestBody Faculty faculty) {
-        facultyService.updateFaculty(faculty);
-
-        return ResponseEntity.ok(faculty);
+        return ResponseEntity.ok(facultyService.updateFaculty(faculty));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteFaculty(@PathVariable Long id) {
-        facultyService.deleteFaculty(id);
-
-        return ResponseEntity.ok("Successfully deleted");
+    public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long id) {
+        return ResponseEntity.ok(facultyService.deleteFaculty(id));
     }
 }
