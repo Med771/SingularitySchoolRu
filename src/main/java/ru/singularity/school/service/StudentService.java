@@ -8,12 +8,14 @@ public sealed interface StudentService permits StudentServiceImpl {
     // Get
     List<Student> getStudents(int age);
 
+    List<Student> findStudentsByAgeBetween(int minAge, int maxAge);
+
     // Post
-    void addStudent(Student student);
+    Student addStudent(Student student);
 
     // Put
-    void updateStudent(Student student);
+    Student updateStudent(Student student);
 
     // Delete
-    void delete(Long id);
+    Student delete(Long id);
 }

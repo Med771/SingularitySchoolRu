@@ -5,6 +5,7 @@ import ru.singularity.school.model.Student;
 import ru.singularity.school.repository.StudentRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public final class StudentServiceImpl implements StudentService {
@@ -19,18 +20,40 @@ public final class StudentServiceImpl implements StudentService {
         return studentRepository.findByAge(age);
     }
 
+    public List<Student> findStudentsByAgeBetween(int minAge, int maxAge) {
+        return studentRepository.findByAgeBetween(minAge, maxAge);
+    }
+
     // Post
-    public void addStudent(Student student) {
-        studentRepository.save(student);
+    public Student addStudent(Student student) {
+        return studentRepository.save(student);
     }
 
     // Put
-    public void updateStudent(Student student) {
-        studentRepository.save(student);
+    public Student updateStudent(Student student) {
+        return studentRepository.save(student);
     }
 
     // Delete
-    public void delete(Long id) {
-        studentRepository.deleteById(id);
+    public Student delete(Long id) {
+        Optional<Student> student = studentRepository.findById(id);
+
+        if (student.isPresent()) {
+            Long facultyId = student.get().getId();
+            String facultyName = student.get().getName();
+            int facultyAge = student.get().getAge();
+
+            studentRepository.deleteById(facultyId);
+
+            Student studentResponse = new Student();
+
+            studentResponse.setId(facultyId);
+            studentResponse.setName(facultyName);
+            studentResponse.setAge(facultyAge);
+
+            return studentResponse;
+        }
+
+        return null;
     }
 }
