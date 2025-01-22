@@ -5,17 +5,20 @@ import jakarta.persistence.*;
 @Entity
 public class Student {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private int age;
 
-    @ManyToOne
-    @JoinColumn(name = "faculty_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "faculty_id", nullable = false)
     private Faculty faculty;
 
-    // Get
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Avatar avatar;
+
+    // Getters
     public Long getId() {
         return id;
     }
@@ -32,7 +35,11 @@ public class Student {
         return faculty;
     }
 
-    // Set
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
+    // Setters
     public void setId(Long id) {
         this.id = id;
     }
@@ -47,5 +54,9 @@ public class Student {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
     }
 }

@@ -2,21 +2,22 @@ package ru.singularity.school.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Faculty {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private String color;
 
-    @OneToMany(mappedBy = "faculty")
-    private List<Student> students;
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Student> students = new ArrayList<>();
 
-    // Get
+    // Getters
     public Long getId() {
         return id;
     }
@@ -33,7 +34,7 @@ public class Faculty {
         return students;
     }
 
-    // Set
+    // Setters
     public void setId(Long id) {
         this.id = id;
     }
@@ -48,5 +49,17 @@ public class Faculty {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    // Utility method to add a student
+    public void addStudent(Student student) {
+        students.add(student);
+        student.setFaculty(this);
+    }
+
+    // Utility method to remove a student
+    public void removeStudent(Student student) {
+        students.remove(student);
+        student.setFaculty(null);
     }
 }
