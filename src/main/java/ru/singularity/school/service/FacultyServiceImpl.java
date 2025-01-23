@@ -1,6 +1,7 @@
 package ru.singularity.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.singularity.school.dto.NewFaculty;
 import ru.singularity.school.model.Faculty;
 import ru.singularity.school.model.Student;
 import ru.singularity.school.repository.FacultyRepository;
@@ -42,7 +43,12 @@ public final class FacultyServiceImpl implements FacultyService {
     }
 
     // Post
-    public Faculty addFaculty(Faculty faculty) {
+    public Faculty addFaculty(NewFaculty newFaculty) {
+        Faculty faculty = new Faculty();
+
+        faculty.setName(newFaculty.getName());
+        faculty.setColor(newFaculty.getColor());
+
         return facultyRepository.save(faculty);
     }
 

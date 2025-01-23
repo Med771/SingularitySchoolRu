@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+import ru.singularity.school.dto.NewFaculty;
 import ru.singularity.school.model.Faculty;
 import ru.singularity.school.model.Student;
 import ru.singularity.school.service.FacultyServiceImpl;
@@ -42,7 +43,7 @@ public class FacultyController {
 
     // Post
     @PostMapping(path = "/post")
-    public ResponseEntity<Faculty> postFaculty(@RequestBody Faculty faculty) {
+    public ResponseEntity<Faculty> postFaculty(@RequestBody NewFaculty faculty) {
         return ResponseEntity.ok(facultyService.addFaculty(faculty));
     }
 

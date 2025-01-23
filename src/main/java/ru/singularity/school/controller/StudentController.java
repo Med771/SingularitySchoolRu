@@ -1,7 +1,9 @@
 package ru.singularity.school.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.singularity.school.dto.NewStudent;
 import ru.singularity.school.model.Student;
 import ru.singularity.school.service.StudentServiceImpl;
 
@@ -30,9 +32,20 @@ public class StudentController {
 
     // Post
     @PostMapping(path = "/post")
-    public ResponseEntity<Student> postFaculty(@RequestBody Student student) {
+    public ResponseEntity<Student> postFaculty(@RequestBody NewStudent student) {
         return ResponseEntity.ok(studentService.addStudent(student));
     }
+
+    @PostMapping(path="set/faculty/{faculty_id}/{student_id}")
+    public ResponseEntity<HttpStatus> setFaculty(@PathVariable Long faculty_id,
+                                                 @PathVariable Long student_id) {
+        if (studentService.addFaculty(faculty_id, student_id)) {
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
 
     // Put
     @PutMapping(path = "/put")

@@ -1,5 +1,6 @@
 package ru.singularity.school.service;
 
+import ru.singularity.school.dto.NewStudent;
 import ru.singularity.school.model.Student;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public sealed interface StudentService permits StudentServiceImpl {
     List<Student> findStudentsByAgeBetween(int minAge, int maxAge);
 
     // Post
-    Student addStudent(Student student);
+    Student addStudent(NewStudent newStudent);
 
     // Put
     Student updateStudent(Student student);
