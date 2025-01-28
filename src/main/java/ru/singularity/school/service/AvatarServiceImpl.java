@@ -1,6 +1,8 @@
 package ru.singularity.school.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.singularity.school.model.Avatar;
@@ -11,6 +13,7 @@ import ru.singularity.school.repository.StudentRepository;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -83,6 +86,12 @@ public class AvatarServiceImpl {
         }
 
         return student.getAvatar();
+    }
+
+    public List<Avatar> getPage(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return avatarRepository.findAll(pageable).getContent();
     }
 
     public void deleteAvatar(Long studentId) {

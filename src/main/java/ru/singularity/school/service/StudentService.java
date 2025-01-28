@@ -7,9 +7,15 @@ import java.util.List;
 
 public sealed interface StudentService permits StudentServiceImpl {
     // Get
-    List<Student> getStudents(int age);
+    List<Student> getStudentsByAge(int age);
 
     List<Student> findStudentsByAgeBetween(int minAge, int maxAge);
+
+    Integer getStudentsCount();
+
+    Double getStudentsAverage();
+
+    List<Student> getFiveLastStudents();
 
     // Post
     Student addStudent(NewStudent newStudent);

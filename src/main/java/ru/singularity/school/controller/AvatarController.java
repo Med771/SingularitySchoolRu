@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student/avatar")
@@ -57,6 +58,16 @@ public class AvatarController {
             return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
         }
         catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @GetMapping(path = "/getPage/{page}/{size}")
+    public ResponseEntity<List<Avatar>> getPage(@PathVariable Integer page, @PathVariable Integer size) {
+        try {
+            return ResponseEntity.ok(avatarService.getPage(page, size));
+        }
+        catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

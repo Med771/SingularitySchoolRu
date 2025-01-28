@@ -21,13 +21,28 @@ public class StudentController {
     // Get
     @GetMapping(path = "/get/{age}")
     public ResponseEntity<List<Student>> getStudent(@PathVariable int age) {
-        return ResponseEntity.ok(studentService.getStudents(age));
+        return ResponseEntity.ok(studentService.getStudentsByAge(age));
     }
 
     @GetMapping(path = "/findByAgeBetween/{minAge}/{maxAge}")
     public ResponseEntity<List<Student>> getStudentsByAgeBetween(@PathVariable int minAge,
                                                                 @PathVariable int maxAge) {
         return ResponseEntity.ok(studentService.findStudentsByAgeBetween(minAge, maxAge));
+    }
+
+    @GetMapping(path = "/countStudents")
+    public ResponseEntity<Integer> countStudents() {
+        return ResponseEntity.ok(studentService.getStudentsCount());
+    }
+
+    @GetMapping(path = "/averageStudents")
+    public ResponseEntity<Double> calculateAverage() {
+        return ResponseEntity.ok(studentService.getStudentsAverage());
+    }
+
+    @GetMapping(path = "/fiveLastStudents")
+    public ResponseEntity<List<Student>> getFiveLastStudents() {
+        return ResponseEntity.ok(studentService.getFiveLastStudents());
     }
 
     // Post
