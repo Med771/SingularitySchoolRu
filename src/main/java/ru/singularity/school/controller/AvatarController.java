@@ -33,7 +33,7 @@ public class AvatarController {
             Path path = Path.of(avatar.getFilePath());
 
             try(InputStream is = Files.newInputStream(path);
-                OutputStream os = response.getOutputStream();) {
+                OutputStream os = response.getOutputStream()) {
                 response.setStatus(200);
                 response.setContentType(avatar.getMediaType());
                 response.setContentLength(Math.toIntExact(avatar.getFileSize()));
@@ -79,10 +79,7 @@ public class AvatarController {
 
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<HttpStatus> delete(@RequestParam("id") Long id) {
-        if (true) {
-            return ResponseEntity.ok(HttpStatus.OK);
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(HttpStatus.NOT_FOUND);
+        avatarService.deleteAvatar(id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }

@@ -21,11 +21,8 @@ public class AvatarServiceImpl {
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
 
-    @Value("file.local.path")
+    @Value("file.local.file")
     private String UPLOAD_DIR;
-
-    @Value("file.url.path")
-    private String UPLOAD_URL;
 
     public AvatarServiceImpl(AvatarRepository avatarRepository,
                              StudentRepository studentRepository) {
@@ -56,7 +53,7 @@ public class AvatarServiceImpl {
                 InputStream is = avatarFile.getInputStream();
                 OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
                 BufferedInputStream bis = new BufferedInputStream(is, 1024);
-                BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
+                BufferedOutputStream bos = new BufferedOutputStream(os, 1024)
         ) {
             bis.transferTo(bos);
         }
@@ -86,6 +83,16 @@ public class AvatarServiceImpl {
         }
 
         return student.getAvatar();
+    }
+
+    public void deleteAvatar(Long studentId) {
+        Optional<Student> isStudent = studentRepository.findById(studentId);
+
+        if (isStudent.isEmpty()) {
+            return ;
+        }
+
+        avatarRepository.deleteById((long) isStudent.get().getAvatar().getId());
     }
 
     private String getExtensions(String fileName) {
