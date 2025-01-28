@@ -21,11 +21,6 @@ public class FacultyController {
     }
 
     // Get
-    @GetMapping(path = "/getByColor/{color}")
-    public ResponseEntity<List<Faculty>> getFacultiesByColor(@PathVariable String color) {
-        return ResponseEntity.ok(facultyService.getFaculties(color));
-    }
-
     @GetMapping(path="getStudentsById/{id}")
     public ResponseEntity<List<Student>> getStudents(@PathVariable Long id) {
         return ResponseEntity.ok(facultyService.getStudents(id));

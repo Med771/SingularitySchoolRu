@@ -8,7 +8,6 @@ import java.util.List;
 
 public sealed interface FacultyService permits FacultyServiceImpl {
     // Get
-    List<Faculty> getFaculties(String color);
     List<Student> getStudents(Long id);
     List<Faculty> findByFacultyName(String facultyName);
     List<Faculty> findByFacultyColor(String facultyColor);

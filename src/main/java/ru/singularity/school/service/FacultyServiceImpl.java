@@ -20,10 +20,6 @@ public final class FacultyServiceImpl implements FacultyService {
     }
 
     // Get
-    public List<Faculty> getFaculties(String color) {
-        return facultyRepository.findByColor(color);
-    }
-
     public List<Student> getStudents(Long id) {
         Optional<Faculty> faculty = facultyRepository.findById(id);
 
