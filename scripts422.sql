@@ -10,6 +10,5 @@ CREATE TABLE Car (
                      pk SERIAL PRIMARY KEY,
                      brand VARCHAR(100) NOT NULL,
                      model VARCHAR(100) NOT NULL,
-                     price DECIMAL NOT NULL,
-                     persons INT[] NOT NULL
+                     price DECIMAL NOT NULL
 );
