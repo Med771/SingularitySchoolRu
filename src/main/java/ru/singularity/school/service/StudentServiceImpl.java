@@ -22,12 +22,24 @@ public final class StudentServiceImpl implements StudentService {
     }
 
     // Get
-    public List<Student> getStudents(int age) {
+    public List<Student> getStudentsByAge(int age) {
         return studentRepository.findByAge(age);
     }
 
+    public Integer getStudentsCount() {
+        return studentRepository.countExpenses();
+    }
+
+    public Double getStudentsAverage() {
+        return studentRepository.averageAge();
+
+    }
     public List<Student> findStudentsByAgeBetween(int minAge, int maxAge) {
         return studentRepository.findByAgeBetween(minAge, maxAge);
+    }
+
+    public List<Student> getFiveLastStudents() {
+        return studentRepository.findLastFiveStudents();
     }
 
     // Post
