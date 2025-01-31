@@ -16,6 +16,7 @@ import java.util.Optional;
 public final class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
+    private final Object isStudentLock = new Object();
 
     Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
@@ -71,6 +72,65 @@ public final class StudentServiceImpl implements StudentService {
                 .mapToInt(Student::getAge)
                 .average()
                 .orElse(0);
+    }
+
+    public void printParallel() {
+        // Для показа работоспособности без бд реализовон свой список
+        String[] names = new String[]{"name_1", "name_2", "name_3", "name_4", "name_5", "name_6"};
+
+        /*List<String> names = studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .toList();*/
+        printForParallel(names[0]);
+
+        new Thread(() -> {
+            printForParallel(names[2]);
+            printForParallel(names[3]);
+        }).start();
+
+
+        new Thread(() -> {
+            printForParallel(names[4]);
+            printForParallel(names[5]);
+        }).start();
+
+        printForParallel(names[1]);
+    }
+
+    public void printSynchronized() {
+        // Для показа работоспособности без бд реализовон свой список
+        String[] names = new String[]{"name_1", "name_2", "name_3", "name_4", "name_5", "name_6"};
+
+        /*List<String> names = studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .toList();*/
+
+        printForSynchronized(names[0]);
+
+        new Thread(() -> {
+            printForSynchronized(names[2]);
+            printForSynchronized(names[3]);
+        }).start();
+
+
+        new Thread(() -> {
+            printForSynchronized(names[4]);
+            printForSynchronized(names[5]);
+        }).start();
+
+        printForSynchronized(names[1]);
+    }
+
+    private void printForParallel(String name) {
+        System.out.println(name);
+    }
+
+    private void printForSynchronized(String name) {
+        synchronized (isStudentLock) {
+            System.out.println(name);
+        }
     }
 
     // Post
