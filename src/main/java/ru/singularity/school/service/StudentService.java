@@ -17,6 +17,10 @@ public sealed interface StudentService permits StudentServiceImpl {
 
     List<Student> getFiveLastStudents();
 
+    List<String> getNamesStartingWithSymbol(String s);
+
+    double getAverageAge();
+
     // Post
     Student addStudent(NewStudent newStudent);
 

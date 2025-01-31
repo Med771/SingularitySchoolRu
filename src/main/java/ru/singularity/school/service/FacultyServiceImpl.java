@@ -9,6 +9,7 @@ import ru.singularity.school.model.Student;
 import ru.singularity.school.repository.FacultyRepository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +44,14 @@ public final class FacultyServiceImpl implements FacultyService {
     public List<Faculty> findByFacultyColor(String facultyColor) {
         logger.info("Find students by faculty color");
         return facultyRepository.findByColorIgnoreCase(facultyColor);
+    }
+
+    public String getMaxLengthName(){
+        return facultyRepository.findAll()
+                .stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length))
+                .orElse("");
     }
 
     // Post

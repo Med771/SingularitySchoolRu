@@ -51,6 +51,28 @@ public final class StudentServiceImpl implements StudentService {
         return studentRepository.findLastFiveStudents();
     }
 
+    public List<String> getNamesStartingWithSymbol(String symbol) {
+        logger.info("Get names starting with symbol");
+
+        return studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .filter(name -> name.toLowerCase().startsWith(symbol.toLowerCase()))
+                .sorted()
+                .map(String::toUpperCase)
+                .toList();
+    }
+
+    public double getAverageAge() {
+        logger.info("Get average age");
+
+        return studentRepository.findAll()
+                .stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0);
+    }
+
     // Post
     public Student addStudent(NewStudent newStudent) {
         logger.info("Add new student");

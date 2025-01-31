@@ -45,6 +45,16 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getFiveLastStudents());
     }
 
+    @GetMapping(path = "/getNamesStartingWithSymbol")
+    public ResponseEntity<List<String>> getNamesStartingWithSymbol(@RequestParam(value = "symbol", defaultValue = "a") String symbol) {
+        return ResponseEntity.ok(studentService.getNamesStartingWithSymbol(symbol));
+    }
+
+    @GetMapping(path = "/averageStudentsByStream")
+    public ResponseEntity<Double> getAverageStudentsByStream() {
+        return ResponseEntity.ok(studentService.getAverageAge());
+    }
+
     // Post
     @PostMapping(path = "/post")
     public ResponseEntity<Student> postFaculty(@RequestBody NewStudent student) {
