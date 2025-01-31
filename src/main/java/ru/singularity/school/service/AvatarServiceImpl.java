@@ -1,5 +1,7 @@
 package ru.singularity.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,8 @@ public class AvatarServiceImpl {
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
 
+    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+
     @Value("file.local.file")
     private String UPLOAD_DIR;
 
@@ -35,13 +39,17 @@ public class AvatarServiceImpl {
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile)
             throws RuntimeException, IOException {
+        logger.info("Uploading avatar to {}", UPLOAD_DIR);
+
         Optional<Student> isStudent = studentRepository.findById(studentId);
 
         if (isStudent.isEmpty()) {
-            throw new RuntimeException("Student not found");
+            logger.error("Student with id {} not found", studentId);
+            throw new RuntimeException("Student with Id {} not found during uploadAvatar method call");
         }
 
         if (avatarFile.isEmpty()) {
+            logger.error("Avatar file is empty");
             throw new RuntimeException("Avatar file is empty");
         }
 
@@ -73,15 +81,18 @@ public class AvatarServiceImpl {
     }
 
     public Avatar getAvatar(Long studentId) {
+        logger.info("Getting avatar from {}", UPLOAD_DIR);
         Optional<Student> isStudent = studentRepository.findById(studentId);
 
         if (isStudent.isEmpty()) {
+            logger.error("Student with Id {} not found during getAvatar method call", studentId);
             throw new RuntimeException("Student not found");
         }
 
         Student student = isStudent.get();
 
         if (student.getAvatar() == null) {
+            logger.error("Avatar with id {} not found during getAvatar method call", studentId);
             throw new RuntimeException("Avatar not found");
         }
 
@@ -89,16 +100,18 @@ public class AvatarServiceImpl {
     }
 
     public List<Avatar> getPage(Integer page, Integer size) {
+        logger.info("Getting page {} of {}", page, size);
         Pageable pageable = PageRequest.of(page, size);
 
         return avatarRepository.findAll(pageable).getContent();
     }
 
     public void deleteAvatar(Long studentId) {
+        logger.info("Deleting avatar from {}", UPLOAD_DIR);
         Optional<Student> isStudent = studentRepository.findById(studentId);
 
         if (isStudent.isEmpty()) {
-            return ;
+            return;
         }
 
         avatarRepository.deleteById((long) isStudent.get().getAvatar().getId());

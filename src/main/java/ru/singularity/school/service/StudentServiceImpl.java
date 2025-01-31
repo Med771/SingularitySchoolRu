@@ -1,5 +1,7 @@
 package ru.singularity.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.singularity.school.dto.NewStudent;
 import ru.singularity.school.model.Faculty;
@@ -15,6 +17,8 @@ public final class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
 
+    Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+
     public StudentServiceImpl(StudentRepository studentRepository,
                               FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
@@ -23,27 +27,34 @@ public final class StudentServiceImpl implements StudentService {
 
     // Get
     public List<Student> getStudentsByAge(int age) {
+        logger.info("Get students by age");
         return studentRepository.findByAge(age);
     }
 
     public Integer getStudentsCount() {
+        logger.info("Get students count");
         return studentRepository.countExpenses();
     }
 
     public Double getStudentsAverage() {
+        logger.info("Get students average");
         return studentRepository.averageAge();
 
     }
     public List<Student> findStudentsByAgeBetween(int minAge, int maxAge) {
+        logger.info("Find students by age between");
         return studentRepository.findByAgeBetween(minAge, maxAge);
     }
 
     public List<Student> getFiveLastStudents() {
+        logger.info("Get five last students");
         return studentRepository.findLastFiveStudents();
     }
 
     // Post
     public Student addStudent(NewStudent newStudent) {
+        logger.info("Add new student");
+
         Student student = new Student();
 
         student.setName(newStudent.getName());
@@ -53,6 +64,8 @@ public final class StudentServiceImpl implements StudentService {
     }
 
     public boolean addFaculty(Long facultyId, Long studentId) {
+        logger.info("Add new faculty");
+
         Optional<Student> student = studentRepository.findById(studentId);
         Optional<Faculty> faculty = facultyRepository.findById(facultyId);
 
@@ -70,13 +83,13 @@ public final class StudentServiceImpl implements StudentService {
 
     // Put
     public Student updateStudent(Student student) {
-
-
+        logger.info("Update student");
         return studentRepository.save(student);
     }
 
     // Delete
     public Student delete(Long id) {
+        logger.info("Delete student");
         Optional<Student> student = studentRepository.findById(id);
 
         if (student.isPresent()) {
@@ -95,6 +108,6 @@ public final class StudentServiceImpl implements StudentService {
             return studentResponse;
         }
 
-        return null;
+        return new Student();
     }
 }
