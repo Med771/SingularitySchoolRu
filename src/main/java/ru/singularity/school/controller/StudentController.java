@@ -45,6 +45,28 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getFiveLastStudents());
     }
 
+    @GetMapping(path = "/getNamesStartingWithSymbol")
+    public ResponseEntity<List<String>> getNamesStartingWithSymbol(@RequestParam(value = "symbol", defaultValue = "a") String symbol) {
+        return ResponseEntity.ok(studentService.getNamesStartingWithSymbol(symbol));
+    }
+
+    @GetMapping(path = "/averageStudentsByStream")
+    public ResponseEntity<Double> getAverageStudentsByStream() {
+        return ResponseEntity.ok(studentService.getAverageAge());
+    }
+
+    @GetMapping(path="/print-parallel")
+    public ResponseEntity<HttpStatus> printParallel() {
+        studentService.printParallel();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/print-synchronized")
+    public ResponseEntity<HttpStatus> printSynchronized() {
+        studentService.printSynchronized();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     // Post
     @PostMapping(path = "/post")
     public ResponseEntity<Student> postFaculty(@RequestBody NewStudent student) {

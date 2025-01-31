@@ -36,6 +36,11 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.findByFacultyColor(color));
     }
 
+    @GetMapping(path = "/getMaxLengthName")
+    public ResponseEntity<String> getMaxLengthName() {
+        return ResponseEntity.ok(facultyService.getMaxLengthName());
+    }
+
     // Post
     @PostMapping(path = "/post")
     public ResponseEntity<Faculty> postFaculty(@RequestBody NewFaculty faculty) {

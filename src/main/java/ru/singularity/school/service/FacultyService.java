@@ -12,6 +12,8 @@ public sealed interface FacultyService permits FacultyServiceImpl {
     List<Faculty> findByFacultyName(String facultyName);
     List<Faculty> findByFacultyColor(String facultyColor);
 
+    String getMaxLengthName();
+
     // Post
     Faculty addFaculty(NewFaculty newFaculty);
 
